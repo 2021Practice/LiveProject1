@@ -66,7 +66,7 @@ public class ExcelReader {
 	// returns the data from a cell
 	public String getCellData(String sheetName,String colName,int rowNum){
 		try{
-			if(rowNum <=0)
+			if(rowNum <0)
 				return "";
 		
 		int index = workbook.getSheetIndex(sheetName);
@@ -85,7 +85,7 @@ public class ExcelReader {
 			return "";
 		
 		sheet = workbook.getSheetAt(index);
-		row = sheet.getRow(rowNum-1);
+		row = sheet.getRow(rowNum);
 		if(row==null)
 			return "";
 		cell = row.getCell(col_Num);
@@ -197,7 +197,7 @@ public class ExcelReader {
 		fis = new FileInputStream(path); 
 		workbook = new XSSFWorkbook(fis);
 
-		if(rowNum<=0)
+		if(rowNum<0)
 			return false;
 		
 		int index = workbook.getSheetIndex(sheetName);

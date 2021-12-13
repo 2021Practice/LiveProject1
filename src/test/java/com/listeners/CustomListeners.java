@@ -1,22 +1,23 @@
 package com.listeners;
 
-import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.SkipException;
 
 import com.base.TestBase;
 import com.relevantcodes.extentreports.LogStatus;
 import com.utilities.CaptureScreen;
+import com.utilities.TestUtils;
 
 public class CustomListeners extends TestBase implements ITestListener {
 
 	public void onTestFailure(ITestResult result) {
 
-		System.out.println("Listener on failure");
+	//	System.out.println("Listener on failure");
 		//Capturing test case failure screenshot and receiving path to file saved
 		String path = CaptureScreen.CaptureScreenShot();
-		System.out.println(path);
+	//	System.out.println(path);
 
 		//entering logs in ReportNG 
 		Reporter.log(result.getName()+" -- Test is failed..."+ "<a href=" + path + " target=\"_blank\" >ScreenShot</a>");
@@ -42,11 +43,25 @@ public class CustomListeners extends TestBase implements ITestListener {
 		extentReports.flush();
 	}
 
-	public void onStart(ITestContext context) {
+	public void onTestSkipped(ITestResult result) {
 
-		logger.debug("Starting test --- " + context.getName());
-		test = extentReports.startTest(context.getName());
+		Reporter.log(result.getName() + " --Test is Skipped as "+result.getThrowable()+"<br>");
 		
+		test.log(LogStatus.SKIP, "Skipped test --- "+result.getName().toUpperCase() +" as "+result.getThrowable());
+		extentReports.endTest(test);
+		extentReports.flush();}
+	
+	public void onTestStart(ITestResult result) {
+		
+		logger.debug("Starting test --- " + result.getName());
+		test = extentReports.startTest(result.getName());
+		
+	//	System.out.println("Test on start is called for  "+result.getName());
+		//Checking run modes
+		if(!TestUtils.isRunnable(result.getName(), excel)) {
+			throw new SkipException("Skipping test case "+result.getName()+" as run mode is \"No\"");
+		}
+		
+	
 	}
-
 }

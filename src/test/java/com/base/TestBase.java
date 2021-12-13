@@ -43,7 +43,6 @@ public class TestBase {
 	public static ExtentTest test;
 	
 	
-	
 	@BeforeSuite
 	public void setUp() {
 
@@ -224,7 +223,7 @@ public class TestBase {
 		}
 
 		if (driver != null) {
-			//driver.quit();
+			driver.quit();
 			logger.debug("Execution completed");
 		}
 
