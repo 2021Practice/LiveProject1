@@ -17,6 +17,8 @@ public class DataProviders extends TestBase{
 		int rows = excel.getRowCount(sheetName);
 		int cols = excel.getColumnCount(sheetName);
 		
+		System.out.println("In sheet "+sheetName+" rows are: "+rows +" and cols are: "+cols);
+		
 		Object[][] data = new Object[rows-1][cols];
 		
 		for(int i=1; i<rows;i++) {

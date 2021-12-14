@@ -30,9 +30,6 @@ public class TestOpenAccount extends TestBase {
 			Assert.assertTrue(alert.getText().contains("Account created successfully"),"Account creation is failed");
 			logger.debug(alert.getText());
 			alert.accept();
-			
-			
-			
 							
 		}
 }

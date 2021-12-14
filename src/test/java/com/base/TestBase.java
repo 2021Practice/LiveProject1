@@ -17,6 +17,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -27,6 +28,7 @@ import org.testng.annotations.BeforeSuite;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import com.sun.corba.se.spi.orbutil.fsm.Action;
 import com.utilities.ExcelReader;
 import com.utilities.ExtentManager;
 
@@ -137,7 +139,7 @@ public class TestBase {
 		}
 
 		if (driver != null) {
-			driver.quit();
+			// driver.quit();
 			logger.debug("Execution completed");
 		}
 
@@ -236,43 +238,87 @@ public class TestBase {
 	public void readFromTable(String locatorForHeadRow, String LocatorForTableRow, String LocatorforCol) {
 
 		int rows, cols;
-		String sheetName= "Sheet1";
-		
-		if(excel.isSheetExist(sheetName)) {
+		String sheetName = "testDeleteCustomer";
+
+		if (excel.isSheetExist(sheetName)) {
 			excel.removeSheet(sheetName);
 		}
 		excel.addSheet(sheetName);
-		
-		
+
 		rows = driver.findElements(By.xpath(LocatorForTableRow)).size();
 		cols = driver.findElements(By.xpath(LocatorforCol)).size();
 
 		boolean flag = true;
 
-		String colName="";
+		String colName = "";
 		for (int row = 1; row <= rows; row++) {
-				
-				if (flag) {
-					for (int col = 1; col <= cols-1; col++) {
-						String Headdata =(driver.findElement(By.xpath((locatorForHeadRow) + "/td[" + col + "]")).getText());
-						excel.addColumn(sheetName, Headdata);
-					}
-					flag = false;
+
+			if (flag) {
+				for (int col = 1; col <= cols; col++) {
+					String Headdata = (driver.findElement(By.xpath((locatorForHeadRow) + "/td[" + col + "]"))
+							.getText());
+					excel.addColumn(sheetName, Headdata);
+
 				}
-				
-				for (int col = 1; col <= cols-1; col++) {
-				String cellData = driver.findElement(By.xpath((LocatorForTableRow) + "[" + row + "]/td[" + col + "]")).getText();
-			
-				if(col==1) colName="First Name";
-				else if(col==2) colName = "Last Name";
-				else if(col==3)	colName= "Post Code";
-				else if(col==4) colName = "Account Number";
-								
-				
-				System.out.println(cellData);
-				excel.setCellData(sheetName, colName , row+1, cellData);
+				flag = false;
 			}
-		
+
+			for (int col = 1; col <= cols; col++) {
+
+				if (col < cols) {
+					String cellData = driver
+							.findElement(By.xpath((LocatorForTableRow) + "[" + row + "]/td[" + col + "]")).getText();
+
+					if (col == 1)
+						colName = "First Name";
+					else if (col == 2)
+						colName = "Last Name";
+					else if (col == 3)
+						colName = "Post Code";
+					else if (col == 4)
+						colName = "Account Number";
+
+					System.out.println(cellData);
+					excel.setCellData(sheetName, colName, row + 1, cellData);
+				}
+
+				else if (col == cols) {
+
+					int num = (int) (Math.random() * 10);
+					System.out.println(num);
+
+					if (num <= 5)
+						excel.setCellData(sheetName, "Delete Customer", row + 1, "Y");
+					else
+						excel.setCellData(sheetName, "Delete Customer", row + 1, "N");
+
+				}
+
+			}
+
+		}
+
+	}
+
+	public void deleteCusFromTable(String LocatorForTableRow, String firstName, String lastName) {
+
+		int rows;
+
+		rows = driver.findElements(By.xpath(LocatorForTableRow)).size();
+
+		for (int row = 1; row <= rows; row++) {
+
+			String fName = driver.findElement(By.xpath((LocatorForTableRow) + "[" + row + "]/td[1]")).getText();
+			String lName = driver.findElement(By.xpath((LocatorForTableRow) + "[" + row + "]/td[2]")).getText();
+			if (fName.equals(firstName) || lName.equals(lastName)) {
+				WebElement deleteBtn = driver
+						.findElement(By.xpath((LocatorForTableRow) + "[" + row + "]/td[5]/button"));
+				
+				Actions actions = new Actions(driver);
+				actions.moveToElement(deleteBtn).click().perform();
+				break;
+			}
+			
 		}
 
 	}

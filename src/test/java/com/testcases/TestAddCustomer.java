@@ -35,7 +35,7 @@ public class TestAddCustomer extends TestBase {
 
 			click("AddCusSubmit_XPATH");
 
-			wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+			wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
 			Alert alert = wait.until(ExpectedConditions.alertIsPresent());
 
