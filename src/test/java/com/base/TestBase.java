@@ -41,21 +41,18 @@ public class TestBase {
 	public static WebDriverWait wait;
 	public ExtentReports extentReports = ExtentManager.getInstance();
 	public static ExtentTest test;
-	
-	
+
 	@BeforeSuite
 	public void setUp() {
 
-		
 		if (driver == null) {
-		
+
 			System.setProperty("current.date", new Date().toString().replace(" ", "_").replace(":", "_"));
 			PropertyConfigurator
 					.configure(System.getProperty("user.dir") + "\\src\\test\\resources\\properties\\log4j.properties");
 
 			System.setProperty("org.uncommons.reportng.escape-output", "false");
-			
-			
+
 			try {
 				inputStream = new FileInputStream(
 						System.getProperty("user.dir") + "\\src\\test\\resources\\properties\\Config.properties");
@@ -128,89 +125,6 @@ public class TestBase {
 		}
 
 	}
-	
-	public void click(String locator) {
-	
-		if(locator.endsWith("_XPATH")) {
-		driver.findElement(By.xpath(OR.getProperty(locator))).click();
-		}else if(locator.endsWith("_CSS")) {
-			driver.findElement(By.cssSelector(OR.getProperty(locator))).click();
-		}else if(locator.endsWith("_ID")) {
-			driver.findElement(By.id(OR.getProperty(locator))).click();
-		}else if(locator.endsWith("_CLASSNAME")) {
-			driver.findElement(By.className(OR.getProperty(locator))).click();
-		}else if(locator.endsWith("_TAGNAME")) {
-			driver.findElement(By.tagName(OR.getProperty(locator))).click();
-		}	
-		
-		test.log(LogStatus.INFO, "Clicked on "+ locator );
-		Reporter.log("Clicked on "+locator+ " <br>");
-		logger.debug("Clicked on "+ locator+ " <br>");
-	}
-	
-	public void selectFromDropDown(String locator, String value) {
-	
-		WebElement dropdown = null;
-		
-			if(locator.endsWith("_XPATH")) {
-			dropdown = driver.findElement(By.xpath(OR.getProperty(locator)));
-			}else if(locator.endsWith("_CSS")) {
-			dropdown =	driver.findElement(By.cssSelector(OR.getProperty(locator)));
-			}else if(locator.endsWith("_ID")) {
-			dropdown = driver.findElement(By.id(OR.getProperty(locator)));
-			}else if(locator.endsWith("_CLASSNAME")) {
-			dropdown = driver.findElement(By.className(OR.getProperty(locator)));
-			}else if(locator.endsWith("_TAGNAME")) {
-			dropdown = driver.findElement(By.tagName(OR.getProperty(locator)));
-			}	
-				
-		Select select = new Select(dropdown);
-		select.selectByVisibleText(value);		
-		
-		test.log(LogStatus.INFO, "Selecting from Dropdown- "+locator+ " & selected value is "+value);
-		Reporter.log("Selecting from Dropdown- "+locator+ " & selected value is "+value+"<br>");
-		logger.debug("Selecting from Dropdown- "+locator+ " & selected value is "+value +" <br>");
-}
-	
-	public void clearTextBox(String locator) {
-		
-		if(locator.endsWith("_XPATH")) {
-		driver.findElement(By.xpath(OR.getProperty(locator))).clear();
-		}else if(locator.endsWith("_CSS")) {
-			driver.findElement(By.cssSelector(OR.getProperty(locator))).clear();
-		}else if(locator.endsWith("_ID")) {
-			driver.findElement(By.id(OR.getProperty(locator))).clear();
-		}else if(locator.endsWith("_CLASSNAME")) {
-			driver.findElement(By.className(OR.getProperty(locator))).clear();
-		}else if(locator.endsWith("_TAGNAME")) {
-			driver.findElement(By.tagName(OR.getProperty(locator))).clear();
-		}	
-		
-		test.log(LogStatus.INFO, "Clearing field from "+ locator );
-		Reporter.log("Clearing field from "+locator+ " <br>");
-		logger.debug("Clearing field from "+ locator+ " <br>");
-	}
-	
-	public void typeIn(String locator, String value) {
-		
-		if(locator.endsWith("_XPATH")) {
-			driver.findElement(By.xpath(OR.getProperty(locator))).sendKeys(value);
-			}else if(locator.endsWith("_CSS")) {
-				driver.findElement(By.cssSelector(OR.getProperty(locator))).sendKeys(value);
-			}else if(locator.endsWith("_ID")) {
-				driver.findElement(By.id(OR.getProperty(locator))).sendKeys(value);
-			}else if(locator.endsWith("_CLASSNAME")) {
-				driver.findElement(By.className(OR.getProperty(locator))).sendKeys(value);
-			}else if(locator.endsWith("_TAGNAME")) {
-				driver.findElement(By.tagName(OR.getProperty(locator))).sendKeys(value);
-			}	
-				
-		
-		test.log(LogStatus.INFO, "Typed in "+locator+ " & entered value is "+value);
-		Reporter.log("Typed in "+locator+ " & entered value is "+value + " <br>");
-		logger.debug("Typed in "+locator+ " & entered value is "+value+ " <br>");
-}
-
 
 	@AfterSuite
 	public void tearDown() {
@@ -229,15 +143,138 @@ public class TestBase {
 
 	}
 
+	public void click(String locator) {
+
+		if (locator.endsWith("_XPATH")) {
+			driver.findElement(By.xpath(OR.getProperty(locator))).click();
+		} else if (locator.endsWith("_CSS")) {
+			driver.findElement(By.cssSelector(OR.getProperty(locator))).click();
+		} else if (locator.endsWith("_ID")) {
+			driver.findElement(By.id(OR.getProperty(locator))).click();
+		} else if (locator.endsWith("_CLASSNAME")) {
+			driver.findElement(By.className(OR.getProperty(locator))).click();
+		} else if (locator.endsWith("_TAGNAME")) {
+			driver.findElement(By.tagName(OR.getProperty(locator))).click();
+		}
+
+		test.log(LogStatus.INFO, "Clicked on " + locator);
+		Reporter.log("Clicked on " + locator + " <br>");
+		logger.debug("Clicked on " + locator + " <br>");
+	}
+
+	public void selectFromDropDown(String locator, String value) {
+
+		WebElement dropdown = null;
+
+		if (locator.endsWith("_XPATH")) {
+			dropdown = driver.findElement(By.xpath(OR.getProperty(locator)));
+		} else if (locator.endsWith("_CSS")) {
+			dropdown = driver.findElement(By.cssSelector(OR.getProperty(locator)));
+		} else if (locator.endsWith("_ID")) {
+			dropdown = driver.findElement(By.id(OR.getProperty(locator)));
+		} else if (locator.endsWith("_CLASSNAME")) {
+			dropdown = driver.findElement(By.className(OR.getProperty(locator)));
+		} else if (locator.endsWith("_TAGNAME")) {
+			dropdown = driver.findElement(By.tagName(OR.getProperty(locator)));
+		}
+
+		Select select = new Select(dropdown);
+		select.selectByVisibleText(value);
+
+		test.log(LogStatus.INFO, "Selecting from Dropdown- " + locator + " & selected value is " + value);
+		Reporter.log("Selecting from Dropdown- " + locator + " & selected value is " + value + "<br>");
+		logger.debug("Selecting from Dropdown- " + locator + " & selected value is " + value + " <br>");
+	}
+
+	public void clearTextBox(String locator) {
+
+		if (locator.endsWith("_XPATH")) {
+			driver.findElement(By.xpath(OR.getProperty(locator))).clear();
+		} else if (locator.endsWith("_CSS")) {
+			driver.findElement(By.cssSelector(OR.getProperty(locator))).clear();
+		} else if (locator.endsWith("_ID")) {
+			driver.findElement(By.id(OR.getProperty(locator))).clear();
+		} else if (locator.endsWith("_CLASSNAME")) {
+			driver.findElement(By.className(OR.getProperty(locator))).clear();
+		} else if (locator.endsWith("_TAGNAME")) {
+			driver.findElement(By.tagName(OR.getProperty(locator))).clear();
+		}
+
+		test.log(LogStatus.INFO, "Clearing field from " + locator);
+		Reporter.log("Clearing field from " + locator + " <br>");
+		logger.debug("Clearing field from " + locator + " <br>");
+	}
+
+	public void typeIn(String locator, String value) {
+
+		if (locator.endsWith("_XPATH")) {
+			driver.findElement(By.xpath(OR.getProperty(locator))).sendKeys(value);
+		} else if (locator.endsWith("_CSS")) {
+			driver.findElement(By.cssSelector(OR.getProperty(locator))).sendKeys(value);
+		} else if (locator.endsWith("_ID")) {
+			driver.findElement(By.id(OR.getProperty(locator))).sendKeys(value);
+		} else if (locator.endsWith("_CLASSNAME")) {
+			driver.findElement(By.className(OR.getProperty(locator))).sendKeys(value);
+		} else if (locator.endsWith("_TAGNAME")) {
+			driver.findElement(By.tagName(OR.getProperty(locator))).sendKeys(value);
+		}
+
+		test.log(LogStatus.INFO, "Typed in " + locator + " & entered value is " + value);
+		Reporter.log("Typed in " + locator + " & entered value is " + value + " <br>");
+		logger.debug("Typed in " + locator + " & entered value is " + value + " <br>");
+	}
+
 	public Boolean IsElementPresent(By by) {
 		try {
 			driver.findElement(by);
 			return true;
-		} 
-		catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			return false;
 		}
 	}
 
-	
+	public void readFromTable(String locatorForHeadRow, String LocatorForTableRow, String LocatorforCol) {
+
+		int rows, cols;
+		String sheetName= "Sheet1";
+		
+		if(excel.isSheetExist(sheetName)) {
+			excel.removeSheet(sheetName);
+		}
+		excel.addSheet(sheetName);
+		
+		
+		rows = driver.findElements(By.xpath(LocatorForTableRow)).size();
+		cols = driver.findElements(By.xpath(LocatorforCol)).size();
+
+		boolean flag = true;
+
+		String colName="";
+		for (int row = 1; row <= rows; row++) {
+				
+				if (flag) {
+					for (int col = 1; col <= cols-1; col++) {
+						String Headdata =(driver.findElement(By.xpath((locatorForHeadRow) + "/td[" + col + "]")).getText());
+						excel.addColumn(sheetName, Headdata);
+					}
+					flag = false;
+				}
+				
+				for (int col = 1; col <= cols-1; col++) {
+				String cellData = driver.findElement(By.xpath((LocatorForTableRow) + "[" + row + "]/td[" + col + "]")).getText();
+			
+				if(col==1) colName="First Name";
+				else if(col==2) colName = "Last Name";
+				else if(col==3)	colName= "Post Code";
+				else if(col==4) colName = "Account Number";
+								
+				
+				System.out.println(cellData);
+				excel.setCellData(sheetName, colName , row+1, cellData);
+			}
+		
+		}
+
+	}
+
 }

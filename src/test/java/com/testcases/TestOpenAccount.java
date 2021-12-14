@@ -3,6 +3,7 @@ package com.testcases;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import com.base.TestBase;
@@ -12,9 +13,13 @@ public class TestOpenAccount extends TestBase {
 	
 		
 		@Test(dataProviderClass=DataProviders.class,dataProvider="dp")
-		public void testOpenAccount(String cusName, String currency) {
+		public void testOpenAccount(String cusName, String currency, String runmode) {
 			
-	
+			if (!runmode.equalsIgnoreCase("y")) {
+				throw new SkipException("Skipping test case from TestOpenAccount for customer " + cusName + " as run mode is \"No\"");
+			}
+			
+			
 			click("OpenAccBtn_XPATH");
 			
 			selectFromDropDown("customer_XPATH", cusName);

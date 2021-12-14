@@ -14,7 +14,7 @@ public class CustomListeners extends TestBase implements ITestListener {
 
 	public void onTestFailure(ITestResult result) {
 
-	//	System.out.println("Listener on failure");
+		System.out.println("Listener on failure");
 		//Capturing test case failure screenshot and receiving path to file saved
 		String path = CaptureScreen.CaptureScreenShot();
 	//	System.out.println(path);

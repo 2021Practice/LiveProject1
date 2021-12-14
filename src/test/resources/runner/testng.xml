@@ -25,8 +25,13 @@
 		<classes>
 			<class name="com.testcases.TestOpenAccount" />
 		</classes>
-	</test> 
-
+	</test>
+	
+	<test thread-count="5" name="Get Customer List">
+		<classes>
+			<class name="com.testcases.TestCustomerList" />
+		</classes>
+	</test>
 
 
 
