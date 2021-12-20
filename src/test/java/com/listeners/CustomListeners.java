@@ -5,7 +5,6 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.SkipException;
 
-
 import com.base.TestBase;
 import com.relevantcodes.extentreports.LogStatus;
 import com.utilities.CaptureScreen;
