@@ -27,7 +27,7 @@ public class TestOpenAccount extends TestBase {
 			click("processBtn_XPATH");
 				
 			Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-			Assert.assertTrue(alert.getText().contains("Account created successfully"),"Account creation is failed");
+			Assert.assertTrue(alert.getText().contains("Account created successfully"),"Account creation is failed for "+cusName);
 			logger.debug(alert.getText());
 			alert.accept();
 							

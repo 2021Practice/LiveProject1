@@ -28,7 +28,7 @@ import org.testng.annotations.BeforeSuite;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import com.sun.corba.se.spi.orbutil.fsm.Action;
+import com.utilities.CaptureScreen;
 import com.utilities.ExcelReader;
 import com.utilities.ExtentManager;
 
@@ -43,7 +43,9 @@ public class TestBase {
 	public static WebDriverWait wait;
 	public ExtentReports extentReports = ExtentManager.getInstance();
 	public static ExtentTest test;
-
+	private String browser;
+	
+	
 	@BeforeSuite
 	public void setUp() {
 
@@ -85,7 +87,17 @@ public class TestBase {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
+		
+			
+		
+			if(System.getenv("browser") !=null && !System.getenv("browser").isEmpty())
+			{
+				browser=System.getenv("browser");
+				System.out.println("From get Env: "+System.getenv("browser"));
+				config.setProperty("browser", browser);
+			}
+		
 			if (config.getProperty("browser").equals("chrome")) {
 
 				System.setProperty("webdriver.chrome.driver", ".\\src\\test\\resources\\executables\\chromedriver.exe");
@@ -139,7 +151,8 @@ public class TestBase {
 		}
 
 		if (driver != null) {
-			// driver.quit();
+			CaptureScreen.CaptureScreenShot();
+			 driver.quit();
 			logger.debug("Execution completed");
 		}
 
@@ -316,6 +329,11 @@ public class TestBase {
 				
 				Actions actions = new Actions(driver);
 				actions.moveToElement(deleteBtn).click().perform();
+				
+				test.log(LogStatus.INFO, "Deleted customer " + firstName +" " +lastName);
+				Reporter.log("Deleted customer " + firstName +" " +lastName + " <br>");
+				logger.debug("Deleted customer " + firstName +" " +lastName + " <br>");
+				
 				break;
 			}
 			
