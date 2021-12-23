@@ -11,7 +11,7 @@ public class TestLoginAsBankManager extends TestBase {
 	@Test
 	public void testLoginAsBankManager() {
 			
-		
+		// using eGit
 		click("BMLoginBtn_XPATH");
 //		driver.findElement(By.xpath(OR.getProperty())).click();
 		Assert.assertTrue(IsElementPresent(By.xpath(OR.getProperty("AddCusBtn_XPATH"))));
